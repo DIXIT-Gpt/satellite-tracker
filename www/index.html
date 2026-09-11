@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>ORBITAL COMMAND</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #181818 0%,
+            #080808 45%,
+            #000000 100%
+        );
+
+    color: #eeeeee;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x: hidden;
+
+}
+
+
+/* ------------------------------
+   SCANLINES
+------------------------------ */
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.025),
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+
+    z-index: 20;
+
+}
+
+
+/* ------------------------------
+   MAIN
+------------------------------ */
+
+.container {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 15px;
+
+}
+
+
+/* ------------------------------
+   TOP BAR
+------------------------------ */
+
+.topbar {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid #333;
+
+    padding-bottom: 12px;
+
+    margin-bottom: 12px;
+
+}
+
+.logo {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+
+}
+
+.live {
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    color: #ff3030;
+
+}
+
+.live::before {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 7px;
+
+    height: 7px;
+
+    background: #ff2020;
+
+    border-radius: 50%;
+
+    margin-right: 6px;
+
+    box-shadow:
+        0 0 10px #ff2020;
+
+}
+
+
+/* ------------------------------
+   HEADER
+------------------------------ */
+
+.header {
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+}
+
+.header h1 {
+
+    margin: 0;
+
+    font-size: 25px;
+
+    letter-spacing: 5px;
+
+}
+
+.header p {
+
+    margin: 6px;
+
+    font-size: 10px;
+
+    color: #777;
+
+    letter-spacing: 3px;
+
+}
+
+
+/* ------------------------------
+   EARTH / RADAR
+------------------------------ */
+
+.radar {
+
+    position: relative;
+
+    width: min(90vw, 520px);
+
+    height: min(90vw, 520px);
+
+    margin: 5px auto 15px;
+
+}
+
+
+/* outer rings */
+
+.ring {
+
+    position: absolute;
+
+    border:
+        1px solid rgba(255,50,50,0.28);
+
+    border-radius: 50%;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+}
+
+.ring1 {
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+.ring2 {
+
+    width: 85%;
+
+    height: 85%;
+
+}
+
+.ring3 {
+
+    width: 70%;
+
+    height: 70%;
+
+}
+
+.ring4 {
+
+    width: 55%;
+
+    height: 55%;
+
+}
+
+
+/* globe */
+
+.globe {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 58%;
+
+    height: 58%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 30%,
+            #777 0%,
+            #444 20%,
+            #222 48%,
+            #050505 75%
+        );
+
+    border:
+        2px solid #888;
+
+    box-shadow:
+
+        0 0 15px rgba(255,255,255,0.2),
+
+        0 0 35px rgba(255,0,0,0.15),
+
+        inset 0 0 45px #000;
+
+}
+
+
+/* globe grid */
+
+.globe::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 28px,
+            rgba(255,255,255,0.13) 29px,
+            transparent 30px
+        ),
+
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 25px,
+            rgba(255,255,255,0.12) 26px,
+            transparent 27px
+        );
+
+    border-radius: 50%;
+
+}
+
+
+/* red glow on globe */
+
+.globe::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 45%;
+
+    height: 100%;
+
+    left: 0;
+
+    top: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,0,0,0.30),
+            transparent
+        );
+
+    border-radius: 50%;
+
+}
+
+
+/* center point */
+
+.center-point {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 10px;
+
+    height: 10px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: #ff2020;
+
+    box-shadow:
+        0 0 15px #ff2020;
+
+    z-index: 5;
+
+}
+
+
+/* orbit line */
+
+.orbit {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 90%;
+
+    height: 35%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-18deg);
+
+    border:
+        1px solid rgba(255,255,255,0.25);
+
+    border-radius: 50%;
+
+}
+
+
+/* satellite marker */
+
+.sat-marker {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 12%;
+
+    width: 9px;
+
+    height: 9px;
+
+    background: #ff3030;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 15px #ff3030;
+
+    animation:
+        pulse 1.2s infinite;
+
+}
+
+@keyframes pulse {
+
+    0%,100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.8);
+        opacity: .5;
+    }
+
+}
+
+
+/* ------------------------------
+   INFO PANELS
+------------------------------ */
+
+.panel {
+
+    background:
+        rgba(20,20,20,0.8);
+
+    border:
+        1px solid #333;
+
+    margin-bottom: 12px;
+
+    padding: 14px;
+
+    position: relative;
+
+}
+
+.panel::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    bottom: 0;
+
+    width: 3px;
+
+    background: #e51d25;
+
+    box-shadow:
+        0 0 10px rgba(255,0,0,.5);
+
+}
+
+.panel-title {
+
+    font-size: 10px;
+
+    color: #777;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+
+}
+
+
+/* ------------------------------
+   LOCATION
+------------------------------ */
+
+.location {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+}
+
+.location-data {
+
+    font-size: 13px;
+
+    color: #ddd;
+
+}
+
+.location button {
+
+    background: transparent;
+
+    color: #ff4040;
+
+    border:
+        1px solid #772020;
+
+    padding: 8px 12px;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+}
+
+
+/* ------------------------------
+   SELECT
+------------------------------ */
+
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    background: #090909;
+
+    color: white;
+
+    border:
+        1px solid #444;
+
+    outline: none;
+
+}
+
+
+/* ------------------------------
+   MAIN DATA
+------------------------------ */
+
+.satellite-name {
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.status {
+
+    font-size: 11px;
+
+    color: #ff3b3b;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 14px;
+
+}
+
+
+.data-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+}
+
+.data {
+
+    border:
+        1px solid #2e2e2e;
+
+    padding: 12px;
+
+    background:
+        rgba(0,0,0,.35);
+
+}
+
+.data-label {
+
+    font-size: 9px;
+
+    color: #666;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 7px;
+
+}
+
+.data-value {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+
+/* ------------------------------
+   SATELLITE LIST
+------------------------------ */
+
+.satellite-list {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 6px;
+
+}
+
+
+.satellite {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    padding: 10px;
+
+    background:
+        rgba(0,0,0,.35);
+
+    border:
+        1px solid #292929;
+
+    cursor: pointer;
+
+}
+
+
+.satellite:hover {
+
+    border-color: #8d2525;
+
+}
+
+
+.sat-name {
+
+    font-size: 11px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+}
+
+
+.badge {
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    padding: 4px 6px;
+
+}
+
+
+.up {
+
+    color: #ff4b4b;
+
+    border:
+        1px solid #7d2424;
+
+}
+
+
+.down {
+
+    color: #666;
+
+    border:
+        1px solid #333;
+
+}
+
+
+/* ------------------------------
+   FOOTER
+------------------------------ */
+
+.footer {
+
+    text-align: center;
+
+    color: #444;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    padding: 15px;
+
+}
+
+
+/* ------------------------------
+   PHONE
+------------------------------ */
+
+@media (max-width: 600px) {
+
+    .data-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+    .satellite-list {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .header h1 {
+
+        font-size: 20px;
+
+    }
+
+}
+
+
+/* ------------------------------
+   DESKTOP
+------------------------------ */
+
+@media (min-width: 800px) {
+
+    .dashboard {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 15px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- TOP -->
+
+    <div class="topbar">
+
+        <div class="logo">
+            ORBITAL COMMAND
+        </div>
+
+        <div class="live">
+            LIVE SYSTEM
+        </div>
+
+    </div>
+
+
+    <div class="header">
+
+        <h1>
+            SATELLITE TRACKING SYSTEM
+        </h1>
+
+        <p>
+            REAL-TIME ORBITAL MONITOR
+        </p>
+
+    </div>
+
+
+    <!-- RADAR -->
+
+    <div class="radar">
+
+        <div class="ring ring1"></div>
+
+        <div class="ring ring2"></div>
+
+        <div class="ring ring3"></div>
+
+        <div class="ring ring4"></div>
+
+        <div class="orbit"></div>
+
+        <div class="globe">
+
+            <div class="center-point"></div>
+
+        </div>
+
+        <div
+            class="sat-marker"
+            id="satMarker">
+        </div>
+
+    </div>
+
+
+    <!-- LOCATION -->
+
+    <div class="panel">
+
+        <div class="panel-title">
+            OBSERVER LOCATION
+        </div>
+
+        <div class="location">
+
+            <div
+                class="location-data"
+                id="location">
+
+                Waiting for location...
+
+            </div>
+
+            <button
+                onclick="getLocation()">
+
+                📍 USE LOCATION
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECT SATELLITE -->
+
+    <div class="panel">
+
+        <div class="panel-title">
+            TARGET SATELLITE
+        </div>
+
+        <select
+            id="satelliteSelect"
+            onchange="showSelectedSatellite()">
+
+            <option>
+                Loading...
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- DATA -->
+
+    <div class="panel">
+
+        <div
+            class="satellite-name"
+            id="satelliteName">
+
+            🛰️ WAITING FOR TARGET
+
+        </div>
+
+
+        <div
+            class="status"
+            id="status">
+
+            ● ACQUIRING DATA
+
+        </div>
+
+
+        <div class="data-grid">
+
+
+            <div class="data">
+
+                <div class="data-label">
+                    ALTITUDE
+                </div>
+
+                <div
+                    class="data-value"
+                    id="altitude">
+
+                    --
+
+                </div>
+
+            </div>
+
+
+            <div class="data">
+
+                <div class="data-label">
+                    AZIMUTH
+                </div>
+
+                <div
+                    class="data-value"
+                    id="direction">
+
+                    --
+
+                </div>
+
+            </div>
+
+
+            <div class="data">
+
+                <div class="data-label">
+                    RANGE
+                </div>
+
+                <div
+                    class="data-value"
+                    id="distance">
+
+                    --
+
+                </div>
+
+            </div>
+
+
+            <div class="data">
+
+                <div class="data-label">
+                    UPDATE
+                </div>
+
+                <div
+                    class="data-value">
+
+                    1 SEC
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- SATELLITE LIST -->
+
+    <div class="panel">
+
+        <div class="panel-title">
+            TRACKED OBJECTS
+        </div>
+
+        <div
+            class="satellite-list"
+            id="satelliteList">
+
+            Loading satellites...
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+
+        ORBITAL COMMAND // AUTOMATIC TELEMETRY
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+let latitude = 28.61;
+
+let longitude = 77.23;
+
+let satellites = [];
+
+let selectedSatellite = null;
+
+let updating = false;
+
+
+/* ------------------------------
+   LOCATION
+------------------------------ */
+
+function getLocation() {
+
+    if (!navigator.geolocation) {
+
+        document.getElementById(
+            "location"
+        ).innerText =
+            "Geolocation unavailable.";
+
+        refreshData();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "location"
+    ).innerText =
+        "ACQUIRING POSITION...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            latitude =
+                position.coords.latitude;
+
+            longitude =
+                position.coords.longitude;
+
+
+            document.getElementById(
+                "location"
+            ).innerText =
+
+                "LAT "
+                + latitude.toFixed(5)
+                + "°   //   LON "
+                + longitude.toFixed(5)
+                + "°";
+
+
+            refreshData();
+
+        },
+
+
+        function() {
+
+            document.getElementById(
+                "location"
+            ).innerText =
+
+                "DEFAULT POSITION ACTIVE";
+
+
+            refreshData();
+
+        },
+
+        {
+
+            enableHighAccuracy: true,
+
+            timeout: 10000,
+
+            maximumAge: 0
+
+        }
+
+    );
+
+}
+
+
+/* ------------------------------
+   GET DATA
+------------------------------ */
+
+async function refreshData() {
+
+
+    if (updating) {
+
+        return;
+
+    }
+
+
+    updating = true;
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                "/api/satellites?lat="
+                + encodeURIComponent(latitude)
+                + "&lon="
+                + encodeURIComponent(longitude)
+                + "&t="
+                + Date.now()
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.error) {
+
+            throw new Error(
+                data.error
+            );
+
+        }
+
+
+        satellites =
+            data.satellites;
+
+
+        updateSelector();
+
+        updateSatelliteList();
+
+
+        if (
+            selectedSatellite === null
+            &&
+            satellites.length > 0
+        ) {
+
+            selectedSatellite =
+                satellites[0].name;
+
+        }
+
+
+        showSelectedSatellite();
+
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "SYSTEM ERROR:",
+            error
+        );
+
+        document.getElementById(
+            "status"
+        ).innerText =
+            "● CONNECTION ERROR";
+
+    }
+
+
+    updating = false;
+
+}
+
+
+/* ------------------------------
+   SELECTOR
+------------------------------ */
+
+function updateSelector() {
+
+    const select =
+        document.getElementById(
+            "satelliteSelect"
+        );
+
+
+    const oldValue =
+        selectedSatellite;
+
+
+    select.innerHTML = "";
+
+
+    satellites.forEach(
+        function(satellite) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                satellite.name;
+
+
+            option.textContent =
+                satellite.name;
+
+
+            if (
+                satellite.name ===
+                oldValue
+            ) {
+
+                option.selected = true;
+
+            }
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if (
+        selectedSatellite === null
+        &&
+        satellites.length > 0
+    ) {
+
+        select.value =
+            satellites[0].name;
+
+    }
+
+}
+
+
+/* ------------------------------
+   DISPLAY TARGET
+------------------------------ */
+
+function showSelectedSatellite() {
+
+
+    const select =
+        document.getElementById(
+            "satelliteSelect"
+        );
+
+
+    selectedSatellite =
+        select.value;
+
+
+    const satellite =
+        satellites.find(
+            function(s) {
+
+                return s.name ===
+                    selectedSatellite;
+
+            }
+        );
+
+
+    if (!satellite) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "satelliteName"
+    ).innerText =
+        "🛰️ " + satellite.name;
+
+
+    document.getElementById(
+        "altitude"
+    ).innerText =
+        satellite.altitude + "°";
+
+
+    document.getElementById(
+        "direction"
+    ).innerText =
+        satellite.direction + "°";
+
+
+    document.getElementById(
+        "distance"
+    ).innerText =
+        satellite.distance + " KM";
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    if (satellite.visible) {
+
+        status.innerText =
+            "● TARGET ABOVE HORIZON";
+
+        status.style.color =
+            "#ff3030";
+
+    }
+
+    else {
+
+        status.innerText =
+            "● TARGET BELOW HORIZON";
+
+        status.style.color =
+            "#666";
+
+    }
+
+
+    /* Move visual satellite marker */
+
+    const marker =
+        document.getElementById(
+            "satMarker"
+        );
+
+
+    let angle =
+        satellite.direction;
+
+
+    marker.style.transform =
+        "rotate("
+        + angle
+        + "deg) translateY("
+        + "-200px"
+        + ")";
+
+}
+
+
+/* ------------------------------
+   SATELLITE LIST
+------------------------------ */
+
+function updateSatelliteList() {
+
+
+    const list =
+        document.getElementById(
+            "satelliteList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    satellites.forEach(
+        function(satellite) {
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "satellite";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+
+            name.className =
+                "sat-name";
+
+
+            name.innerText =
+                satellite.name;
+
+
+            const badge =
+                document.createElement(
+                    "div"
+                );
+
+
+            badge.className =
+                satellite.visible
+                ? "badge up"
+                : "badge down";
+
+
+            badge.innerText =
+                satellite.visible
+                ? "ABOVE"
+                : "BELOW";
+
+
+            item.appendChild(name);
+
+            item.appendChild(badge);
+
+
+            item.onclick =
+                function() {
+
+                    selectedSatellite =
+                        satellite.name;
+
+                    document.getElementById(
+                        "satelliteSelect"
+                    ).value =
+                        satellite.name;
+
+                    showSelectedSatellite();
+
+                };
+
+
+            list.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* ------------------------------
+   START
+------------------------------ */
+
+getLocation();
+
+
+/* REAL AUTO UPDATE */
+
+setInterval(
+    refreshData,
+    1000
+);
+
+
+</script>
+
+
+</body>
+
+</html>
